@@ -39,14 +39,14 @@ services:
     volumes:
       - ./backend/src:/app/src
       - ./.env:/app/src/.env
-      - ./backend/.air.toml:/app/backend/.air.toml
+      - ./backend/.air.toml:/app/.air.toml
     tty: true
     ports:
       - "8000:8000"
     environment:
       MYSQL_HOST: ${DB_CONTAINER}
-    working_dir: /app
-    command: air -c backend/.air.toml
+    working_dir: /app/src
+    command: air -c ../.air.toml
 
 volumes:
   frontend-node-modules:
