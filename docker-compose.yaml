@@ -37,13 +37,15 @@ services:
     build: ./docker/go
     container_name: go-api
     volumes:
-      - ./go/src:/go/src
-      - ./.env:/go/src/.env
+      - ./backend/src:/app/src
+      - ./.env:/app/src/.env
     tty: true
     ports:
       - "8089:8000"
     environment:
       MYSQL_HOST: ${DB_CONTAINER}
+    command: air -c .air.toml
+    working_dir: /app/src
 
 volumes:
   frontend-node-modules:
