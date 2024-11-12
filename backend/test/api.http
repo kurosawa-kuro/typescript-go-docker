@@ -5,6 +5,19 @@
 GET {{baseUrl}}/ping
 Content-Type: application/json
 
+### read /microposts
+GET {{baseUrl}}/microposts
+Content-Type: application/json  
+
+### Create /microposts
+POST {{baseUrl}}/microposts
+Content-Type: application/json  
+
+{
+    "content": "This is a test post"
+}
+
+
 ### Post Example
 POST {{baseUrl}}/api/posts
 Content-Type: application/json

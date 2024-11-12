@@ -15,7 +15,7 @@ services:
     env_file:
       - .env
     ports:
-      - "${DB_PORT:-5432}:5432"
+      - "5433:5432"
     networks:
       - app-network
     healthcheck:
@@ -37,6 +37,10 @@ services:
       - "${BACKEND_PORT:-8000}:8000"
     environment:
       DB_HOST: ${DB_CONTAINER}
+      DATABASE: ${DATABASE}
+      DB_PORT: "5432"
+      USER_NAME: ${USER_NAME}
+      USER_PASSWORD: ${USER_PASSWORD}
       TZ: "Asia/Tokyo"
     working_dir: /app/src
     command: air -c ../.air.toml

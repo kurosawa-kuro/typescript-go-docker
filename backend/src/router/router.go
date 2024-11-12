@@ -5,33 +5,27 @@ import (
 	"backend/src/middleware"
 
 	"github.com/gin-gonic/gin"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
+	"gorm.io/gorm"
 )
 
 // Setup initializes the router and its routes
-func Setup() *gin.Engine {
+func Setup(db *gorm.DB) *gin.Engine {
 	r := gin.Default()
 
 	// ミドルウェアの設定
 	r.Use(middleware.CORS())
 
-	// Swaggerの設定
-	setupSwagger(r)
+	// ハンドラーの初期化
+	micropostHandler := handler.NewMicropostHandler(db)
 
 	// ルートの設定
-	setupRoutes(r)
+	r.GET("/ping", handler.PingHandler)
+
+	microposts := r.Group("/microposts")
+	{
+		microposts.POST("", micropostHandler.Create)
+		microposts.GET("", micropostHandler.FindAll)
+	}
 
 	return r
-}
-
-// setupSwagger configures swagger documentation
-func setupSwagger(r *gin.Engine) {
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-}
-
-// setupRoutes configures all application routes
-func setupRoutes(r *gin.Engine) {
-	r.GET("/ping", handler.PingHandler)
-	// 他のルートをここに追加
 }
