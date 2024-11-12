@@ -15,3 +15,5 @@ docker logs -f backend
 
 
 docker compose exec backend go test ./...
+
+http://localhost:8000/swagger/index.html
