@@ -2,12 +2,13 @@ import Image from "next/image";
 
 // デフォルトでサーバーコンポーネント
 async function getPingData() {
-  const res = await fetch('http://localhost:8000/ping', {
+  const res = await fetch(`${process.env.API_URL}/ping`, {
+    method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
     },
-    cache: 'no-store'  // キャッシュを無効化
-  });
+});
 
   if (!res.ok) {
     throw new Error('Failed to fetch data');

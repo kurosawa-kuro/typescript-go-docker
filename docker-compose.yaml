@@ -13,8 +13,11 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=development
+      - API_URL=http://go:8000
     command: sh -c "npm install && npm run dev"
     user: "root"
+    networks:
+      - app-network
 
   db:
     image: mysql:8.0
@@ -32,6 +35,8 @@ services:
       - .env
     ports:
       - 3366:3306
+    networks:
+      - app-network
 
   go:
     build: ./docker/go
@@ -47,7 +52,13 @@ services:
       MYSQL_HOST: ${DB_CONTAINER}
     working_dir: /app/src
     command: air -c ../.air.toml
+    networks:
+      - app-network
 
 volumes:
   frontend-node-modules:
     driver: local
+
+networks:
+  app-network:
+    driver: bridge
