@@ -10,7 +10,6 @@ RUN go install github.com/joho/godotenv/cmd/godotenv@latest
 RUN curl -L https://github.com/golang-migrate/migrate/releases/download/v4.11.0/migrate.linux-amd64.tar.gz | tar xvz
 RUN mv ./migrate.linux-amd64 /usr/bin/migrate
 
-WORKDIR /app/src
+WORKDIR /app
 
-# .air.tomlはボリュームマウントで提供されるので、COPYは不要
-CMD ["air", "-c", ".air.toml"]
+CMD ["air", "-c", "backend/.air.toml"]

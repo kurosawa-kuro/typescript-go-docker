@@ -1,7 +1,7 @@
 package main
 
 import (
-	"backend/src/handler" // ハンドラーをインポート
+	"backend/src/handler"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -10,16 +10,15 @@ import (
 func main() {
 	r := gin.Default()
 
-	// CORSの設定
+	// CORS設定
 	r.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://localhost:3000"},
-		AllowMethods: []string{"GET", "POST", "PUT", "DELETE"},
-		AllowHeaders: []string{"Content-Type"},
+		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Accept"},
+		AllowCredentials: true,
 	}))
 
-	// ハンドラーを登録
 	r.GET("/ping", handler.PingHandler)
 
-	// ... 他の設定
 	r.Run(":8000")
 }
