@@ -14,7 +14,7 @@ POST {{baseUrl}}/microposts
 Content-Type: application/json  
 
 {
-    "content": "This is a test post"
+    "title": "This is a test post"
 }
 
 
