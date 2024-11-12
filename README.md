@@ -14,3 +14,5 @@ docker compose exec backend go test ./...
 http://localhost:8000/swagger/index.html
 
 http://localhost:3000
+
+http://localhost:5050/
