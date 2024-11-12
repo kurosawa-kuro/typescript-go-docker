@@ -1,9 +1,9 @@
 services:
-  app:
+  frontend:
     build:
       context: .
       dockerfile: docker/node/Dockerfile
-    container_name: next-app
+    container_name: frontend
     tty: true
     working_dir: /usr/src/app
     volumes:
@@ -13,7 +13,7 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=development
-      - API_URL=http://go:8000
+      - API_URL=http://backend:8000
     command: sh -c "npm install && npm run dev"
     user: "root"
     networks:
@@ -38,9 +38,9 @@ services:
     networks:
       - app-network
 
-  go:
+  backend:
     build: ./docker/go
-    container_name: go-api
+    container_name: backend
     volumes:
       - ./backend/src:/app/src:delegated
       - ./.env:/app/src/.env
