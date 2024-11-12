@@ -3,19 +3,17 @@ services:
     build:
       context: .
       dockerfile: docker/node/Dockerfile
-    container_name: react-app
+    container_name: next-app
     tty: true
     working_dir: /usr/src/app
     volumes:
-      - ./frontend:/usr/src/app:delegated
+      - ./frontend:/usr/src/app
       - frontend-node-modules:/usr/src/app/node_modules
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=development
-      - WATCHPACK_POLLING=true
-      - CI=true
-    command: sh -c "npm install && npm start"
+    command: sh -c "npm install && npm run dev"
     user: "root"
 
   db:
