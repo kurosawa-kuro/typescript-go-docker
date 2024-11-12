@@ -2,7 +2,6 @@ package main
 
 import (
 	"backend/src/handler"
-	"fmt"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -18,8 +17,6 @@ func main() {
 		AllowHeaders:     []string{"Origin", "Content-Type", "Accept"},
 		AllowCredentials: true,
 	}))
-
-	fmt.Println("CORS設定完了")
 
 	r.GET("/ping", handler.PingHandler)
 

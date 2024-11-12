@@ -42,7 +42,7 @@ services:
     build: ./docker/go
     container_name: go-api
     volumes:
-      - ./backend/src:/app/src
+      - ./backend/src:/app/src:delegated
       - ./.env:/app/src/.env
       - ./backend/.air.toml:/app/.air.toml
     tty: true
