@@ -1,0 +1,50 @@
+### Variables
+@baseUrl = http://localhost:8000
+
+### Ping Test
+GET {{baseUrl}}/ping
+Content-Type: application/json
+
+### Post Example
+POST {{baseUrl}}/api/posts
+Content-Type: application/json
+
+{
+    "title": "Test Post",
+    "content": "This is a test post"
+}
+
+### Get Example with Query Parameters
+GET {{baseUrl}}/api/users?page=1&limit=10
+Content-Type: application/json
+
+### Get Example with Path Parameters
+GET {{baseUrl}}/api/users/123
+Content-Type: application/json
+
+### Put Example
+PUT {{baseUrl}}/api/users/123
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "john@example.com"
+}
+
+### Delete Example
+DELETE {{baseUrl}}/api/users/123
+Content-Type: application/json
+
+### Authentication Example
+POST {{baseUrl}}/api/login
+Content-Type: application/json
+
+{
+    "email": "user@example.com",
+    "password": "password123"
+}
+
+### Example with Headers
+GET {{baseUrl}}/api/protected
+Content-Type: application/json
+Authorization: Bearer your-token-here
