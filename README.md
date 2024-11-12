@@ -12,3 +12,6 @@ icacls "frontend" /grant Everyone:F
 docker-compose down
 docker-compose up -d --build
 docker logs -f backend
+
+
+docker compose exec backend go test ./...
