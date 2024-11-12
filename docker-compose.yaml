@@ -1,24 +1,6 @@
-services:
-  frontend:
-    build:
-      context: .
-      dockerfile: docker/node/Dockerfile
-    container_name: frontend
-    tty: true
-    working_dir: /usr/src/app
-    volumes:
-      - ./frontend:/usr/src/app
-      - frontend-node-modules:/usr/src/app/node_modules
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=development
-      - API_URL=http://backend:8000
-    command: sh -c "npm install && npm run dev"
-    user: "root"
-    networks:
-      - app-network
+version: '3.8'
 
+services:
   db:
     image: mysql:8.0
     container_name: ${DB_CONTAINER}
@@ -34,26 +16,58 @@ services:
     env_file:
       - .env
     ports:
-      - 3366:3306
+      - "${DB_PORT:-3366}:3306"
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   backend:
-    build: ./docker/go
+    build:
+      context: ./docker/go
+      dockerfile: Dockerfile
     container_name: backend
     volumes:
       - ./backend/src:/app/src:delegated
       - ./.env:/app/src/.env
       - ./backend/.air.toml:/app/.air.toml
-    tty: true
     ports:
-      - "8000:8000"
+      - "${BACKEND_PORT:-8000}:8000"
     environment:
       MYSQL_HOST: ${DB_CONTAINER}
+      TZ: "Asia/Tokyo"
     working_dir: /app/src
     command: air -c ../.air.toml
     networks:
       - app-network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/node/Dockerfile
+    container_name: frontend
+    volumes:
+      - ./frontend:/usr/src/app
+      - frontend-node-modules:/usr/src/app/node_modules
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    environment:
+      NODE_ENV: development
+      API_URL: http://backend:8000
+      TZ: "Asia/Tokyo"
+    working_dir: /usr/src/app
+    command: sh -c "npm install && npm run dev"
+    user: "root"
+    networks:
+      - app-network
+    depends_on:
+      - backend
 
 volumes:
   frontend-node-modules:
