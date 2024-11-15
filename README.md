@@ -15,4 +15,7 @@ http://localhost:8000/swagger/index.html
 
 http://localhost:3000
 
+Pgadmin
 http://localhost:5050/
+
+docker-compose down && docker-compose up --build
