@@ -63,10 +63,10 @@ services:
     environment:
       NODE_ENV: development
       API_URL: http://backend:8000
+      WATCHPACK_POLLING: "true"
       TZ: "Asia/Tokyo"
     working_dir: /usr/src/app
-    command: sh -c "npm install && npm run dev"
-    user: "root"
+    command: sh -c "npm install && npm run dev -- -H 0.0.0.0"
     networks:
       - app-network
     depends_on:
