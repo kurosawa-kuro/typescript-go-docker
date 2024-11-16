@@ -18,6 +18,6 @@ http://localhost:3000
 Pgadmin
 http://localhost:5050/
 
-docker-compose down && docker-compose up --build
+docker-compose down -v&& docker-compose up --build
 
 Nextjsは作り直し

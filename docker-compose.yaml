@@ -56,8 +56,8 @@ services:
       dockerfile: docker/node/Dockerfile
     container_name: frontend
     volumes:
-      - ./frontend:/usr/src/app
-      - frontend-node-modules:/usr/src/app/node_modules
+      - ./frontend:/usr/src/app:cached
+      - /usr/src/app/node_modules
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
       - "6006:6006"
@@ -67,15 +67,8 @@ services:
       WATCHPACK_POLLING: "true"
       TZ: "Asia/Tokyo"
     working_dir: /usr/src/app
-    command: >
-      sh -c "
-        npm install &&
-        npm install next@latest &&
-        npm install --save-dev jest @testing-library/react @testing-library/jest-dom @testing-library/user-event jest-environment-jsdom &&
-        npx storybook@latest init --builder webpack5 &&
-        npm install --save-dev @storybook/addon-essentials @storybook/addon-interactions @storybook/addon-links @storybook/blocks @storybook/react @storybook/react-webpack5 @storybook/testing-library &&
-        npm run dev & npm run storybook -- --ci --no-open
-      "
+    user: "node"
+    command: sh -c "npm install && npm run dev"
     networks:
       - app-network
     depends_on:

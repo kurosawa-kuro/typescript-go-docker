@@ -1,25 +1,6 @@
 import Image from "next/image";
 
-// デフォルトでサーバーコンポーネント
-async function getPingData() {
-  const res = await fetch(`${process.env.API_URL}/ping`, {
-    method: 'GET',
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-    },
-});
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
-
-  return res.json();
-}
-
-export default async function Home() {
-  const data = await getPingData();
-
+export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
@@ -41,14 +22,6 @@ export default async function Home() {
           </li>
           <li>Save and see your changes instantly.</li>
         </ol>
-
-        {/* サーバーレスポンスの表示 */}
-        <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-          <h2 className="text-lg font-bold mb-2">Server Response:</h2>
-          <pre className="bg-white dark:bg-gray-900 p-3 rounded">
-            {JSON.stringify(data, null, 2)}
-          </pre>
-        </div>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
