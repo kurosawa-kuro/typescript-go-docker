@@ -60,6 +60,7 @@ services:
       - frontend-node-modules:/usr/src/app/node_modules
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
+      - "6006:6006"
     environment:
       NODE_ENV: development
       API_URL: http://backend:8000
@@ -71,7 +72,9 @@ services:
         npm install &&
         npm install next@latest &&
         npm install --save-dev jest @testing-library/react @testing-library/jest-dom @testing-library/user-event jest-environment-jsdom &&
-        npm run dev -- -H 0.0.0.0
+        npx storybook@latest init --builder webpack5 &&
+        npm install --save-dev @storybook/addon-essentials @storybook/addon-interactions @storybook/addon-links @storybook/blocks @storybook/react @storybook/react-webpack5 @storybook/testing-library &&
+        npm run dev & npm run storybook -- --ci --no-open
       "
     networks:
       - app-network
@@ -105,3 +108,4 @@ volumes:
 networks:
   app-network:
     driver: bridge
+

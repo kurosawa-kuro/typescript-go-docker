@@ -19,3 +19,5 @@ Pgadmin
 http://localhost:5050/
 
 docker-compose down && docker-compose up --build
+
+Nextjsは作り直し
