@@ -24,8 +24,8 @@ services:
 
   backend:
     build:
-      context: ./docker/go
-      dockerfile: Dockerfile
+      context: ./backend/src
+      dockerfile: ../../docker/go/Dockerfile
     container_name: backend
     volumes:
       - ./backend/src:/app/src:delegated
