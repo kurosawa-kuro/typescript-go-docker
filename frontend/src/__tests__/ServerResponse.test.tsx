@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { ServerResponse } from '../ServerResponse'
+import { ServerResponse } from '@/app/components/ServerResponse'
 
 describe('ServerResponse', () => {
   // テストの前後でfetchのモックをセットアップ/クリーンアップ
