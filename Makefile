@@ -50,6 +50,9 @@ test-frontend: ## フロントエンドのテストを実行
 test-frontend-watch: ## フロントエンドのテストをウォッチモードで実行
 	$(DC) exec frontend npm run test:watch
 
+test-backend: ## バックエンドのテストを実行
+	$(DC) exec backend go test ./...
+
 # ヘルプコマンド
 help: ## このヘルプを表示
 	@echo "Usage: make [target]"
