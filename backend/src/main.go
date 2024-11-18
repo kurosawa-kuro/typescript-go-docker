@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-contrib/cors"
+	"log"
 )
 
 // @title           Your API Title
@@ -16,6 +17,7 @@ import (
 func main() {
 	// データベースの初期化
 	db := config.SetupDB()
+	// defer db.Close()
 
 	// Ginのインスタンスを作成
 	r := gin.Default()
@@ -34,6 +36,8 @@ func main() {
 	// ルーターの設定
 	router.Setup(db, r)
 
-	// サーバーの起動
-	r.Run(":8000")
+	// サーバーの起動 (with error handling)
+	if err := r.Run(":8000"); err != nil {
+		log.Fatalf("Failed to start server: %v", err)
+	}
 }

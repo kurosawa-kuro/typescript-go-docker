@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ServerResponse } from "./components/ServerResponse";
+import { ServerResponse } from "@/app/components/ServerResponse";
 
 export default function Home() {
   return (

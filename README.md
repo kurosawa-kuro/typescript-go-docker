@@ -18,6 +18,29 @@ http://localhost:3000
 Pgadmin
 http://localhost:5050/
 
+
+Storybook
+http://localhost:6006/
+
 docker-compose down -v&& docker-compose up --build
 
 Nextjsは作り直し
+
+
+# コンテナを再ビルドして起動
+make rebuild
+
+# コンテナを停止
+make down
+
+# コンテナのログを表示
+make logs
+
+# 実行中のコンテナを表示
+make ps
+
+# コンテナ、ボリューム、ネットワークを完全に削除
+make clean
+
+# 利用可能なコマンドの一覧を表示
+make help
