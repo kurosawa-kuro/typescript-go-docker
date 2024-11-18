@@ -17,7 +17,7 @@ import (
 func main() {
 	// データベースの初期化
 	db := config.SetupDB()
-	defer db.Close()
+	// defer db.Close()
 
 	// Ginのインスタンスを作成
 	r := gin.Default()
