@@ -7,6 +7,15 @@ docker system prune -af
 
 Dev Containers: Rebuild and Reopen in Container
 
+docker compose -f .devcontainer/docker-compose.yml up -d
+
+
+# ホストマシンで実行
+docker compose -f .devcontainer/docker-compose.yml down
+docker volume rm typescript-go-docker_postgres-data
+docker system prune -f
+docker volume prune -f
+
 
 docker compose exec backend go test ./...
 
