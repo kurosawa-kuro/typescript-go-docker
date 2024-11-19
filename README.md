@@ -24,23 +24,11 @@ http://localhost:6006/
 
 docker-compose down -v&& docker-compose up --build
 
-Nextjsは作り直し
+	// SSH エージェントソケットをマウント
+	"mounts": [
+		"source=/run/host-services/ssh-auth.sock,target=/run/host-services/ssh-auth.sock,type=bind"
+	],
 
-
-# コンテナを再ビルドして起動
-make rebuild
-
-# コンテナを停止
-make down
-
-# コンテナのログを表示
-make logs
-
-# 実行中のコンテナを表示
-make ps
-
-# コンテナ、ボリューム、ネットワークを完全に削除
-make clean
-
-# 利用可能なコマンドの一覧を表示
-make help
+	"remoteEnv": {
+		"SSH_AUTH_SOCK": "/run/host-services/ssh-auth.sock"
+	}
