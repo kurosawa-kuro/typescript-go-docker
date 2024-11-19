@@ -1,9 +1,20 @@
 FROM mcr.microsoft.com/devcontainers/go:1-1.23-bookworm
 
-# Install Node.js
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends nodejs
+# Install Node.js and Japanese language support
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends \
+        nodejs \
+        locales \
+    && sed -i '/ja_JP.UTF-8/s/^# //g' /etc/locale.gen \
+    && locale-gen \
+    && echo "LANG=ja_JP.UTF-8" > /etc/default/locale \
+    && echo "LANGUAGE=ja_JP:ja" >> /etc/default/locale \
+    && echo "LC_ALL=ja_JP.UTF-8" >> /etc/default/locale
+
+# Set environment variables for Japanese locale
+ENV LANG=ja_JP.UTF-8 \
+    LANGUAGE=ja_JP:ja \
+    LC_ALL=ja_JP.UTF-8
 
 # Install global npm packages if needed
 # RUN su vscode -c "npm install -g typescript @types/node" 2>&1
