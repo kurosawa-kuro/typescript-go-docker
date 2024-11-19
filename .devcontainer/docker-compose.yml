@@ -20,6 +20,9 @@ services:
     networks:
       - devcontainer_network
 
+    depends_on:
+      - db
+
   db:
     image: postgres:latest
     restart: unless-stopped
@@ -33,7 +36,10 @@ services:
     networks:
       - devcontainer_network
 
+    container_name: db
+
 # Define the network
 networks:
   devcontainer_network:
+    name: devcontainer_network
     driver: bridge
