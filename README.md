@@ -32,3 +32,6 @@ docker-compose down -v&& docker-compose up --build
 	"remoteEnv": {
 		"SSH_AUTH_SOCK": "/run/host-services/ssh-auth.sock"
 	}
+
+
+	docker compose -f .devcontainer/docker-compose.yml build --no-cache
