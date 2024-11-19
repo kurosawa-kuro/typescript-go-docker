@@ -35,3 +35,26 @@ docker-compose down -v&& docker-compose up --build
 
 
 	docker compose -f .devcontainer/docker-compose.yml build --no-cache
+
+
+# 1. すべてのコンテナを停止し削除（-vオプションでボリュームも削除）
+docker-compose down -v
+
+# 2. 未使用のコンテナ、ネットワーク、イメージ、ボリュームをすべて削除
+docker system prune -a --volumes
+
+# 3. （オプション）イメージを個別に削除する場合
+docker rmi $(docker images -q)
+
+# 4. （オプション）ボリュームを個別に削除する場合
+docker volume rm $(docker volume ls -q)
+================
+
+# Dockerの完全クリーンアップ
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+docker system prune -a --volumes -f
+
+# VSCode関連ファイルのクリーンアップ
+rm -rf ~/.vscode-server
+rm -rf ~/.vscode-remote-containers

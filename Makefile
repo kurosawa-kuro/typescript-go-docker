@@ -25,6 +25,24 @@ clean: ## コンテナ、ボリューム、ネットワークを削除
 	$(DC) down -v --rmi all --remove-orphans
 
 ###################
+# クリーンアップ関連
+###################
+clean: ## コンテナ、ボリューム、ネットワークを削除
+	$(DC) down -v --rmi all --remove-orphans
+
+clean-all: clean ## Dockerシステム全体のクリーンアップ（すべてのコンテナ、イメージ、ボリュームを削除）
+	docker system prune -a --volumes -f
+
+clean-images: ## すべてのDockerイメージを削除
+	docker rmi $$(docker images -q) -f 2>/dev/null || true
+
+clean-volumes: ## すべてのDockerボリュームを削除
+	docker volume rm $$(docker volume ls -q) 2>/dev/null || true
+
+reset: clean-all ## 完全なリセット（すべてを削除して再ビルド）
+	$(DC) up --build -d
+
+###################
 # ビルド関連
 ###################
 rebuild: down ## コンテナを再ビルドして起動
