@@ -11,27 +11,33 @@ import (
 )
 
 func SetupDB() *gorm.DB {
-	// Add error checking for required environment variables
-	host := os.Getenv("DB_HOST")
-	user := os.Getenv("USER_NAME")
-	password := os.Getenv("USER_PASSWORD")
-	dbname := os.Getenv("DATABASE")
-	port := os.Getenv("DB_PORT")
+	// 環境変数名を.envファイルに合わせる
+	host := os.Getenv("POSTGRES_HOSTNAME")
+	user := os.Getenv("POSTGRES_USER")
+	password := os.Getenv("POSTGRES_PASSWORD")
+	dbname := os.Getenv("POSTGRES_DB")
+	port := "5432" // PostgreSQLのデフォルトポート
 
 	// Verify that all required variables are present
-	if host == "" || user == "" || password == "" || dbname == "" || port == "" {
+	if host == "" || user == "" || password == "" || dbname == "" {
 		panic("Missing required database environment variables")
 	}
 
+	fmt.Printf("Connecting to PostgreSQL with:\nHost: %s\nUser: %s\nDB: %s\nPort: %s\n",
+		host, user, dbname, port)
+
 	dsn := fmt.Sprintf(
-		"host=%s user=%s password=%s dbname=%s port=5432 sslmode=disable TimeZone=Asia/Tokyo",
-		host, user, password, dbname,
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Tokyo",
+		host, user, password, dbname, port,
 	)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
+		fmt.Printf("Connection error: %v\n", err)
 		panic("Failed to connect database")
 	}
+
+	fmt.Println("Successfully connected to database!")
 
 	// マイグレーション
 	db.AutoMigrate(&model.Micropost{})
