@@ -21,8 +21,9 @@ ps: ## 実行中のコンテナを表示
 logs: ## コンテナのログを表示
 	$(DC) logs -f
 
-clean: ## コンテナ、ボリューム、ネットワークを削除
-	$(DC) down -v --rmi all --remove-orphans
+clean:
+	-docker-compose down -v --rmi all --remove-orphans 2>/dev/null || true
+	-docker system prune -a -f
 
 ###################
 # ビルド関連

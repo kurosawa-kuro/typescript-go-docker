@@ -1,12 +1,11 @@
 # react-ts-go-docker
 React TypeScript Go in Docker 
 
-docker-compose down
 
+docker compose down
+docker system prune -af
 
-docker-compose down -v
-docker-compose up -d --build backend
-docker logs -f backend
+Dev Containers: Rebuild and Reopen in Container
 
 
 docker compose exec backend go test ./...
