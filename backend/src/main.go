@@ -1,13 +1,24 @@
 package main
 
 import (
+	"log"
+
 	"backend/src/config"
 	"backend/src/router"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gin-contrib/cors"
-	"log"
+	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
+
+func init() {
+	// Try to load from both possible locations
+	if err := godotenv.Load("backend/src/.env"); err != nil {
+		if err := godotenv.Load(".env"); err != nil {
+			log.Printf("Warning: .env file not found")
+		}
+	}
+}
 
 // @title           Your API Title
 // @version         1.0
